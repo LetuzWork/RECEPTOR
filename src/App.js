@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { QrReader } from "react-qr-reader";
+// import QrReader from "react-qr-scanner";
+import { useState } from "react";
+import styled from "styled-components";
+
+const ReaderContainer = styled.div`
+  width: 60vw;
+  height: 60vh;
+`;
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 function App() {
+  const [data, setData] = useState();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer className="App">
+      <ReaderContainer>
+        <QrReader
+          constraints={{ facingMode: "environfdment" }}
+          onResult={(result) => {
+            result && setData(result.text);
+          }}
+        />
+        <p>data:{data}</p>
+      </ReaderContainer>
+    </AppContainer>
   );
 }
 
